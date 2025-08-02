@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Contact | Beast Mode Gym</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #1a202c, #111827);
+      color: #e5e7eb;
+    }
+    h1, h2, h3 {
+      font-family: 'Poppins', sans-serif;
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(15px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeInUp {
+      animation: fadeInUp 0.75s ease forwards;
+    }
+    nav.bg-blur {
+      background-color: rgba(0,0,0,0.6);
+      backdrop-filter: saturate(180%) blur(12px);
+    }
+    .btn-primary {
+      background: linear-gradient(to right, #fbbf24, #f97316);
+      color: black;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      box-shadow: 0 6px 15px rgba(249, 115, 22, 0.4);
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(to right, #f97316, #fbbf24);
+      box-shadow: 0 10px 25px rgba(249, 115, 22, 0.7);
+      transform: scale(1.05);
+    }
+    nav .logo {
+      font-weight: 800;
+      font-size: 1.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 4px rgba(251, 191, 36, 0.8), 0 0 10px rgba(251, 191, 36, 0.6);
+    }
+    nav ul li a:hover {
+      color: #f97316;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="bg-blur fixed w-full z-50 shadow">
+  <div class="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
+    <a href="index.html" class="logo flex items-center gap-2">🏋️ Beast Mode Gym</a>
+    <ul class="hidden md:flex gap-10 items-center font-semibold text-white">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="programs.html">Programs</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="membership.html">Membership</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="membership.html" class="btn-primary">Join Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="h-[80px]"></div>
+
+<!-- ✅ CONTACT FORM SECTION -->
+<section class="max-w-2xl mx-auto my-16 p-8 bg-gray-800 rounded-xl shadow-lg text-center animate-fadeInUp">
+  <h2 class="text-4xl text-yellow-400 font-bold mb-4">Contact Us</h2>
+  <p class="text-gray-200 mb-6 max-w-xl mx-auto">
+    Got a question, want a free gym tour, or ready to sign up? Reach out to us anytime!
+  </p>
+
+  <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-10 text-lg text-gray-200 max-w-xl mx-auto">
+    <div class="flex items-center gap-2">
+      <span class="text-yellow-400 text-2xl">📞</span>
+      <a href="tel:+919487293657" class="hover:underline">+91 94872 93657</a>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-yellow-400 text-2xl">✉️</span>
+      <a href="mailto:vinithkmr006@gmail.com" class="hover:underline">vinithkmr006@gmail.com</a>
+    </div>
+  </div>
+
+  <form id="contactForm" class="space-y-6 text-left max-w-xl mx-auto">
+    <!-- Required Hidden Input -->
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+
+    <input type="text" name="name" placeholder="Your Name" required
+      class="w-full p-4 rounded bg-gray-900 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+    <input type="email" name="email" placeholder="Your Email" required
+      class="w-full p-4 rounded bg-gray-900 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+    <textarea name="message" rows="5" placeholder="Your Message" required
+      class="w-full p-4 rounded bg-gray-900 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 resize-none"></textarea>
+    
+    <button type="submit"
+      class="w-full bg-yellow-400 text-black font-semibold py-4 rounded shadow-lg hover:bg-yellow-500 transition transform hover:scale-105">
+      📤 Send Message
+    </button>
+  </form>
+
+  <div id="thankYouMsg" class="mt-6 text-green-400 font-bold hidden">
+    ✅ Thank you! Your message has been sent successfully.
+  </div>
+</section>
+
+<!-- MAP + WHATSAPP -->
+<section class="max-w-2xl mx-auto my-16 p-8 bg-gray-800 rounded-xl shadow-lg text-center">
+  <h3 class="text-yellow-400 font-bold mb-4">Find Us</h3>
+  <iframe 
+    src="https://www.google.com/maps?q=Beast+Mode+Gym&output=embed" 
+    frameborder="0" allowfullscreen
+    class="w-full h-56 rounded-lg border-2 border-yellow-400"
+    loading="lazy"></iframe>
+  <div class="mt-6">
+    <a href="https://wa.me/919487293657" target="_blank" class="inline-flex items-center gap-3 bg-green-500 text-white px-5 py-3 rounded-full shadow-lg hover:bg-green-600">
+      💬 Chat on WhatsApp
+    </a>
+  </div>
+</section>
+
+
+
+<!-- ✅ JavaScript to handle form submission -->
+<script>
+  const form = document.getElementById('contactForm');
+  const thankYouMsg = document.getElementById('thankYouMsg');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    fetch('https://formsubmit.co/ajax/vinithkmr006@gmail.com', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => {
+      if (response.ok) {
+        form.reset();
+        thankYouMsg.classList.remove('hidden');
+        thankYouMsg.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        alert('❌ Something went wrong. Please try again.');
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      alert('❌ Could not send the message. Please try later.');
+    });
+  });
+</script>
+ <!-- Footer -->
+  <footer class="bg-black text-yellow-400 py-12 px-6 md:px-20 select-none">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+      <div class="space-y-4">
+        <a href="index.html" class="inline-flex items-center gap-2 font-bold text-yellow-400 text-2xl select-none">
+          🏋️ Beast Mode Gym
+        </a>
+        <p class="text-gray-400 max-w-xs">
+          Empowering you since 2012 to achieve your fitness goals with expert coaching and top-tier facilities.
+        </p>
+      </div>
+      <div>
+        <h3 class="font-bold text-yellow-400 text-xl mb-4">Quick Links</h3>
+        <ul class="space-y-2 text-gray-300">
+          <li><a href="index.html" class="hover:text-yellow-400 transition">Home</a></li>
+          <li><a href="about.html" class="hover:text-yellow-400 transition">About Us</a></li>
+          <li><a href="programs.html" class="hover:text-yellow-400 transition">Programs</a></li>
+          <li><a href="membership.html" class="hover:text-yellow-400 transition">Membership</a></li>
+          <li><a href="gallery.html" class="hover:text-yellow-400 transition">Gallery</a></li>
+          <li><a href="contact.html" class="hover:text-yellow-400 transition">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-yellow-400 text-xl mb-4">Contact Us</h3>
+        <p class="text-gray-300 mb-2">
+          📞 <a href="tel:+919487293657" class="hover:text-yellow-400 transition">+91 94872 93657</a><br />
+          ✉️ <a href="mailto:vinithkmr006@gmail.com" class="hover:text-yellow-400 transition">vinithkmr006@gmail.com</a>
+        </p>
+        <p class="text-gray-400 text-sm max-w-xs">
+          Visit us for a free tour or personal consultation. Our friendly team is here to help!
+        </p>
+        <div class="flex items-center justify-center md:justify-start space-x-4 mt-6">
+          <a href="#" aria-label="Facebook" class="text-yellow-400 hover:text-yellow-300 transition text-2xl" target="_blank" rel="noopener noreferrer" tabindex="0">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M22 12a10 10 0 10-11.58 9.85v-6.97h-2.53v-2.88h2.53v-2.2c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.24 0-1.63.77-1.63 1.56v1.86h2.77l-.44 2.88h-2.33v6.97A10.04 10.04 0 0022 12z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Instagram" class="text-yellow-400 hover:text-yellow-300 transition text-2xl" target="_blank" rel="noopener noreferrer" tabindex="0">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm8.933 2.5a1.193 1.193 0 110 2.386 1.193 1.193 0 010-2.386zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Twitter" class="text-yellow-400 hover:text-yellow-300 transition text-2xl" target="_blank" rel="noopener noreferrer" tabindex="0">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M22.46 6c-.77.35-1.59.58-2.46.69a4.3 4.3 0 001.88-2.37 8.69 8.69 0 01-2.75 1.05 4.28 4.28 0 00-7.29 3.9 12.16 12.16 0 01-8.83-4.48 4.28 4.28 0 001.32 5.7 4.22 4.22 0 01-1.94-.54v.05a4.28 4.28 0 003.44 4.19 4.3 4.3 0 01-1.93.07 4.28 4.28 0 004 3 8.6 8.6 0 01-5.3 1.83c-.34 0-.67-.02-1-.07a12.17 12.17 0 006.58 1.93c7.9 0 12.22-6.54 12.22-12.22 0-.19-.01-.37-.02-.56A8.67 8.67 0 0022.46 6z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-bold text-yellow-400 text-xl mb-4">Newsletter</h3>
+        <p class="text-gray-400 mb-4 max-w-xs mx-auto md:mx-0">
+          Get updates on new programs and discounts. Subscribe to our newsletter!
+        </p>
+        <form id="newsletterForm" class="flex max-w-xs mx-auto md:mx-0" novalidate>
+          <input type="email" id="newsletterEmail" placeholder="Your email" required
+            class="w-full rounded-l-xl p-3 border border-yellow-400 bg-black text-yellow-400 placeholder-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+          <button type="submit" class="bg-yellow-400 rounded-r-xl px-6 font-bold text-black transition hover:bg-yellow-500 focus:outline-none">
+            Subscribe
+          </button>
+        </form>
+        <p id="newsletterMsg" class="mt-3 text-sm font-semibold"></p>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-12 border-t border-yellow-600 pt-6 text-center text-yellow-500 select-none text-sm">
+      &copy; 2025 Beast Mode Gym. All rights reserved. Crafted with ❤️ by Vinith Kumar
+    </div>
+  </footer>
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+        menuBtn.setAttribute('aria-expanded', String(!expanded));
+      });
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          menuBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+    // Newsletter form interactivity
+    const newsletterForm = document.getElementById('newsletterForm');
+    const newsletterEmail = document.getElementById('newsletterEmail');
+    const newsletterMsg = document.getElementById('newsletterMsg');
+    if(newsletterForm){
+      newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = newsletterEmail.value.trim();
+        if (!email) {
+          newsletterMsg.textContent = 'Please enter your email.';
+          newsletterMsg.style.color = '#f87171';
+          return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          newsletterMsg.textContent = 'Please enter a valid email address.';
+          newsletterMsg.style.color = '#f87171';
+          return;
+        }
+        newsletterMsg.textContent = 'Thank you for subscribing!';
+        newsletterMsg.style.color = '#bbf7d0';
+        newsletterEmail.value = '';
+      });
+    }
+    // Gallery Lightbox logic
+    const lightboxOverlay = document.getElementById('lightboxOverlay');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    const galleryItems = Array.from(document.querySelectorAll('.gallery-item img'));
+    const galleryFrames = Array.from(document.querySelectorAll('.gallery-item'));
+    let currentIndex = 0;
+    let captions = galleryFrames.map(item => item.dataset.caption || item.querySelector('.gallery-caption')?.textContent || '');
+
+    function openLightbox(index) {
+      currentIndex = index;
+      lightboxImage.src = galleryItems[currentIndex].src;
+      lightboxImage.alt = galleryItems[currentIndex].alt || "Gallery Image";
+      lightboxCaption.textContent = captions[currentIndex];
+      lightboxOverlay.classList.add('show');
+      setTimeout(() => lightboxImage.focus(), 120);
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lightboxOverlay.classList.remove('show');
+      setTimeout(() => { lightboxOverlay.style.display = "none"; }, 250);
+      document.body.style.overflow = '';
+    }
+    function showPrev() { currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length; openLightbox(currentIndex); }
+    function showNext() { currentIndex = (currentIndex + 1) % galleryItems.length; openLightbox(currentIndex);}
+    galleryFrames.forEach((item, index) => {
+      item.addEventListener('click', () => openLightbox(index));
+      item.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openLightbox(index);
+        }
+      });
+    });
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxClose.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') closeLightbox(); });
+    lightboxPrev.addEventListener('click', showPrev);
+    lightboxPrev.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') showPrev(); });
+    lightboxNext.addEventListener('click', showNext);
+    lightboxNext.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') showNext(); });
+    document.addEventListener('keydown', e => {
+      if (lightboxOverlay.classList.contains('show')) {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') showPrev();
+        if (e.key === 'ArrowRight') showNext();
+      }
+    });
+    lightboxOverlay.addEventListener('keydown', function(e) {
+      if (!lightboxOverlay.classList.contains('show')) return;
+      const focusables = [lightboxClose, lightboxPrev, lightboxImage, lightboxNext];
+      let idx = focusables.indexOf(document.activeElement);
+      if(e.key === 'Tab') {
+        e.preventDefault();
+        if(e.shiftKey) {
+          idx = idx - 1 < 0 ? focusables.length - 1 : idx - 1;
+        } else {
+          idx = (idx + 1) % focusables.length;
+        }
+        focusables[idx].focus();
+      }
+    });
+    lightboxOverlay.addEventListener('click', e => { if (e.target === lightboxOverlay) closeLightbox(); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Membership | Beast Mode Gym</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Roboto:ital,wght@0,400;0,700&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #141718 0%, #181e29 100%);
+      color: #ececf1;
+    }
+    h1, h2, h3 {
+      font-family: 'Poppins', sans-serif;
+      user-select: none;
+    }
+
+    /* Fade In Animation */
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(15px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeUp {
+      animation: fadeInUp 0.75s ease forwards;
+    }
+
+    /* Navbar background blur and transparency */
+    nav.bg-blur {
+      background-color: rgba(10,10,12,0.82);
+      backdrop-filter: saturate(180%) blur(17px);
+      -webkit-backdrop-filter: saturate(180%) blur(17px);
+      user-select: none;
+    }
+
+    /* Gold Gradient Button */
+    .btn-primary {
+      background: linear-gradient(90deg, #FFD700 0%, #FFAD06 100%);
+      color: #1E1B14;
+      font-weight: 700;
+      padding: 0.85rem 2rem;
+      border-radius: 9999px;
+      box-shadow: 0 5px 18px 0 rgba(255, 216, 65,0.14);
+      transition: all 0.24s cubic-bezier(0.53, 0.16, 0.26, 0.82);
+      display: inline-block;
+      user-select: none;
+      text-align: center;
+      outline: none;
+      border: none;
+    }
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background: linear-gradient(90deg, #FFAD06 0%, #FFD700 100%);
+      color: #10141b;
+      box-shadow: 0 9px 26px rgba(255, 216, 65, 0.43);
+      transform: scale(1.05) translateY(-3px);
+    }
+
+    /* Plan Cards */
+    .plan-card {
+      border: 2.5px solid rgba(255, 217, 80, 0.16);
+      background: linear-gradient(145deg, rgba(27,32,43,1) 75%, rgba(32,22,48,0.93) 100%);
+      border-radius: 1.75rem;
+      padding: 2.2rem 2.2rem 2rem 2.2rem;
+      box-shadow: 0 0 10px 3px rgba(249, 203, 52, 0.12);
+      transition: 
+        transform 0.2s cubic-bezier(.55,.18,.43,.93),
+        box-shadow 0.22s ease,
+        border 0.24s;
+      cursor: pointer;
+      color: #ececf1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      user-select: none;
+      position: relative;
+      outline: none;
+    }
+    .plan-card:hover, .plan-card:focus-within {
+      border-color: #FFD700;
+      box-shadow: 0 5px 38px 0 rgba(255, 217, 80, 0.14);
+      background: linear-gradient(145deg, #232A3A 85%, #222130 100%);
+      transform: translateY(-7px) scale(1.018);
+      /* Changed text color to dark gold for visibility */
+      color: #b38f00;
+    }
+    /* Override text elements to use same visible dark gold color on hover/focus */
+    .plan-card:hover h3,
+    .plan-card:focus-within h3,
+    .plan-card:hover p,
+    .plan-card:focus-within p,
+    .plan-card:hover ul,
+    .plan-card:focus-within ul,
+    .plan-card:hover li,
+    .plan-card:focus-within li,
+    .plan-card:hover .price,
+    .plan-card:focus-within .price {
+      color: #b38f00;
+      text-shadow: none;
+    }
+
+    .plan-card h3 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #FFD700;
+      margin-bottom: 1.2rem;
+      transition: color 0.2s;
+      letter-spacing: 0.03em;
+      text-shadow: 0 1px 8px #FFED73a5;
+    }
+    .plan-card p {
+      color: inherit;
+      margin-bottom: 1.22rem;
+      line-height: 1.58;
+      font-size: 1.09rem;
+    }
+    .plan-card ul {
+      list-style-type: disc;
+      list-style-position: inside;
+      font-weight: 600;
+      margin-bottom: 1.45rem;
+      padding-left: 0;
+      color: #FFD900;
+      font-size: 1rem;
+      opacity: 0.97;
+    }
+    .plan-card ul li {
+      margin-bottom: 0.5rem;
+      color: #ffe17a;
+      text-shadow: 0 1px 1px #332a;
+    }
+    .plan-card .price {
+      font-weight: 900;
+      font-size: 1.65rem;
+      margin-bottom: 1.7rem;
+      letter-spacing: 0.04em;
+      color: #FFD700;
+      text-shadow: 0 1px 6px #cda824ba;
+    }
+    .plan-card a.btn-primary {
+      font-size: 1.06rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-top: auto;
+      letter-spacing: 0.05em;
+    }
+
+    /* Special Offer - softer yellow */
+    .special-offer {
+      background: linear-gradient(90deg, #FFD700 90%, #FFAD06 100%);
+      color: #171617;
+      border-radius: 1.4rem;
+      padding: 1.4rem 2.1rem;
+      font-weight: 900;
+      font-size: 1.45rem;
+      text-align: center;
+      box-shadow: 0 0 22px rgba(255,216,65, 0.43);
+      animation: pulse 3s ease-in-out infinite;
+      max-width: 520px;
+      margin: 3rem auto 1.5rem auto;
+      user-select: none;
+      border: 2px solid #FFE17A;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 24px #FFE17A80; }
+      50%      { box-shadow: 0 0 42px #FFE17A; }
+    }
+
+    /* Testimonials */
+    .testimonial-card {
+      background: linear-gradient(145deg, #1b2230 80%, #24282f 100%);
+      border: 2px solid #292b38;
+      border-radius: 1.2rem;
+      padding: 2rem 2.3rem 1.5rem 2.3rem;
+      box-shadow: 0 5px 20px rgba(255, 217, 80, 0.09);
+      color: #ececf1;
+      user-select: none;
+      transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+      cursor: default;
+    }
+    .testimonial-card:hover {
+      border-color: #FFD700;
+      box-shadow: 0 0 24px #FFD7008b;
+      transform: translateY(-5px) scale(1.02);
+      color: #1B1816;
+    }
+    .testimonial-card p {
+      font-style: italic;
+      color: #ffe17a;
+      margin-bottom: 1.13rem;
+      line-height: 1.58;
+      user-select: text;
+      text-shadow: 0 1px 6px #997e1062;
+    }
+    .testimonial-card .author {
+      font-weight: 700;
+      color: #FFD700;
+      font-size: 1.1rem;
+      user-select: none;
+      letter-spacing: 0.02em;
+    }
+
+    /* Link Hover */
+    a {
+      transition: color 0.24s;
+    }
+    a:hover, a:focus {
+      color: #FFD700;
+      outline: none;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+
+  <!-- Navbar unchanged -->
+  <nav class="bg-blur fixed w-full z-50 shadow">
+    <div class="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
+      <a href="index.html" class="logo flex items-center gap-2 select-none">
+        🏋️ <span class="hidden sm:inline">Beast Mode Gym</span>
+      </a>
+      <button id="menuBtn" class="md:hidden text-yellow-400 text-4xl focus:outline-none" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+      <ul id="navbarMenu" class="hidden md:flex gap-10 items-center font-semibold text-white select-none">
+        <li><a href="index.html" class="transition hover:text-yellow-400 focus:text-yellow-400">Home</a></li>
+        <li><a href="about.html" class="transition hover:text-yellow-400 focus:text-yellow-400">About</a></li>
+        <li><a href="programs.html" class="transition hover:text-yellow-400 focus:text-yellow-400">Programs</a></li>
+        <li><a href="gallery.html" class="transition hover:text-yellow-400 focus:text-yellow-400">Gallery</a></li>
+        <li><a href="membership.html" class="transition hover:text-yellow-400 focus:text-yellow-400">Membership</a></li>
+        <li><a href="contact.html" class="transition hover:text-yellow-400 focus:text-yellow-400">Contact</a></li>
+        <li><a href="membership.html" class="btn-primary focus:ring-4 focus:ring-yellow-400 focus:outline-none">Join Now</a></li>
+      </ul>
+    </div>
+    <ul id="mobileMenu" class="bg-blur fixed top-16 right-0 w-64 shadow-lg rounded-l-lg px-8 py-6 space-y-6 text-white text-lg font-semibold select-none hidden z-50">
+      <li><a href="index.html" class="block hover:text-yellow-400 focus:text-yellow-400">Home</a></li>
+      <li><a href="about.html" class="block hover:text-yellow-400 focus:text-yellow-400">About</a></li>
+      <li><a href="programs.html" class="block hover:text-yellow-400 focus:text-yellow-400">Programs</a></li>
+      <li><a href="gallery.html" class="block hover:text-yellow-400 focus:text-yellow-400">Gallery</a></li>
+      <li><a href="membership.html" class="block hover:text-yellow-400 focus:text-yellow-400">Membership</a></li>
+      <li><a href="contact.html" class="block hover:text-yellow-400 focus:text-yellow-400">Contact</a></li>
+      <li><a href="membership.html" class="btn-primary block px-6 py-3 rounded-full text-center focus:ring-4 focus:ring-yellow-400 focus:outline-none">Join Now</a></li>
+    </ul>
+
+  </nav>
+
+  <!-- Spacer -->
+  <div class="h-[80px]"></div>
+
+  <!-- Membership Plans Grid -->
+  <section class="max-w-7xl mx-auto my-16 px-8">
+    <h2 class="text-4xl font-extrabold text-yellow-400 text-center mb-12 tracking-wide select-none">Membership Plans</h2>
+    <div class="grid md:grid-cols-3 gap-10">
+      <div class="plan-card animate-fadeUp" style="animation-delay: 0.1s;">
+        <h3>Basic</h3>
+        <p>Perfect for newcomers looking for essential gym access.</p>
+        <ul>
+          <li>Unlimited gym access</li>
+          <li>Access to cardio zone</li>
+          <li>Free fitness assessment once</li>
+          <li>Group classes at extra cost</li>
+        </ul>
+        <div class="price">₹999 / month</div>
+        <a href="contact.html" class="btn-primary w-full py-3 rounded-full font-semibold">Get Started</a>
+      </div>
+
+      <div class="plan-card animate-fadeUp" style="animation-delay: 0.2s;">
+        <h3>Standard</h3>
+        <p>For fitness enthusiasts seeking access to classes and guidance.</p>
+        <ul>
+          <li>All gym facilities access</li>
+          <li>Unlimited group classes included</li>
+          <li>Monthly fitness assessment</li>
+          <li>Personal trainer consultation (1x/month)</li>
+          <li>Free nutrition planning</li>
+        </ul>
+        <div class="price">₹1,499 / month</div>
+        <a href="contact.html" class="btn-primary w-full py-3 rounded-full font-semibold">Choose Plan</a>
+      </div>
+
+      <div class="plan-card animate-fadeUp" style="animation-delay: 0.3s;">
+        <h3>Premium</h3>
+        <p>Full access with personal training, spa, and premium services.</p>
+        <ul>
+          <li>All Standard features included</li>
+          <li>Unlimited personal training sessions</li>
+          <li>Access to spa and sauna</li>
+          <li>Priority booking for classes and trainers</li>
+          <li>Advanced nutrition & diet planning</li>
+          <li>Complimentary merchandise kit</li>
+        </ul>
+        <div class="price">₹1,999 / month</div>
+        <a href="contact.html" class="btn-primary w-full py-3 rounded-full font-semibold">Upgrade Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Special Offer -->
+  <section class="max-w-4xl mx-auto">
+    <div class="special-offer">
+      ⭐ First Week Free For All New Members! ⭐
+    </div>
+  </section>
+
+  <!-- Member Success Stories -->
+  <section class="max-w-5xl mx-auto my-20 px-8 animate-fadeUp" style="animation-delay: 0.4s;">
+    <h2 class="text-3xl font-extrabold text-yellow-400 text-center mb-10 tracking-wide select-none">What Our Members Say</h2>
+    <div class="grid md:grid-cols-2 gap-10">
+      <div class="testimonial-card">
+        <p>"Joined the Standard plan – lost 12kg in 6 months with constant support and amazing trainers."</p>
+        <div class="author">- Ravi T.</div>
+      </div>
+      <div class="testimonial-card">
+        <p>"Premium plan is worth every rupee. Personal trainer helped me stay accountable and motivated!"</p>
+        <div class="author">- Aarav M.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (unchanged) -->
+  <footer class="bg-black text-yellow-400 py-12 px-6 md:px-20 select-none">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+      <div class="space-y-4">
+        <a href="index.html" class="inline-flex items-center gap-2 font-bold text-yellow-400 text-2xl select-none">
+          🏋️ Beast Mode Gym
+        </a>
+        <p class="text-gray-400 max-w-xs">
+          Empowering you since 2012 to achieve your fitness goals with expert coaching and top-tier facilities.
+        </p>
+      </div>
+      <div>
+        <h3 class="font-bold text-yellow-400 text-xl mb-4">Quick Links</h3>
+        <ul class="space-y-2 text-gray-300">
+          <li><a href="index.html" class="hover:text-yellow-400 transition">Home</a></li>
+          <li><a href="about.html" class="hover:text-yellow-400 transition">About Us</a></li>
+          <li><a href="programs.html" class="hover:text-yellow-400 transition">Programs</a></li>
+          <li><a href="membership.html" class="hover:text-yellow-400 transition">Membership</a></li>
+          <li><a href="gallery.html" class="hover:text-yellow-400 transition">Gallery</a></li>
+          <li><a href="contact.html" class="hover:text-yellow-400 transition">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-yellow-400 text-xl mb-4">Contact Us</h3>
+        <p class="text-gray-300 mb-2">
+          📞 <a href="tel:+919487293657" class="hover:text-yellow-400 transition">+91 94872 93657</a><br />
+          ✉️ <a href="mailto:vinithkmr006@gmail.com" class="hover:text-yellow-400 transition">vinithkmr006@gmail.com</a>
+        </p>
+        <p class="text-gray-400 text-sm max-w-xs">
+          Visit us for a free tour or personal consultation. Our friendly team is here to help!
+        </p>
+        <div class="flex items-center justify-center md:justify-start space-x-4 mt-6">
+          <!-- Social Icons -->
+          <a href="#" aria-label="Facebook" class="text-yellow-400 hover:text-yellow-300 transition text-2xl" target="_blank" rel="noopener noreferrer" tabindex="0">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M22 12a10 10 0 10-11.58 9.85v-6.97h-2.53v-2.88h2.53v-2.2c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.24 0-1.63.77-1.63 1.56v1.86h2.77l-.44 2.88h-2.33v6.97A10.04 10.04 0 0022 12z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Instagram" class="text-yellow-400 hover:text-yellow-300 transition text-2xl" target="_blank" rel="noopener noreferrer" tabindex="0">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm8.933 2.5a1.193 1.193 0 110 2.386 1.193 1.193 0 010-2.386zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Twitter" class="text-yellow-400 hover:text-yellow-300 transition text-2xl" target="_blank" rel="noopener noreferrer" tabindex="0">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M22.46 6c-.77.35-1.59.58-2.46.69a4.3 4.3 0 001.88-2.37 8.69 8.69 0 01-2.75 1.05 4.28 4.28 0 00-7.29 3.9 12.16 12.16 0 01-8.83-4.48 4.28 4.28 0 001.32 5.7 4.22 4.22 0 01-1.94-.54v.05a4.28 4.28 0 003.44 4.19 4.3 4.3 0 01-1.93.07 4.28 4.28 0 004 3 8.6 8.6 0 01-5.3 1.83c-.34 0-.67-.02-1-.07a12.17 12.17 0 006.58 1.93c7.9 0 12.22-6.54 12.22-12.22 0-.19-.01-.37-.02-.56A8.67 8.67 0 0022.46 6z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Newsletter Signup -->
+      <div>
+        <h3 class="font-bold text-yellow-400 text-xl mb-4">Newsletter</h3>
+        <p class="text-gray-400 mb-4 max-w-xs mx-auto md:mx-0">
+          Get updates on new programs and discounts. Subscribe to our newsletter!
+        </p>
+        <form id="newsletterForm" class="flex max-w-xs mx-auto md:mx-0" novalidate>
+          <input type="email" id="newsletterEmail" placeholder="Your email" required
+            class="w-full rounded-l-xl p-3 border border-yellow-400 bg-black text-yellow-400 placeholder-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+          <button type="submit" class="bg-yellow-400 rounded-r-xl px-6 font-bold text-black transition hover:bg-yellow-500 focus:outline-none">
+            Subscribe
+          </button>
+        </form>
+        <p id="newsletterMsg" class="mt-3 text-sm font-semibold"></p>
+      </div>
+    </div>
+    <!-- Divider -->
+    <div class="max-w-7xl mx-auto mt-12 border-t border-yellow-600 pt-6 text-center text-yellow-500 select-none text-sm">
+      &copy; 2025 Beast Mode Gym. All rights reserved. Crafted with ❤️ by Vinith Kumar
+    </div>
+  </footer>
+
+  <script>
+    // Newsletter subscription validation & feedback
+    const newsletterForm = document.getElementById('newsletterForm');
+    const newsletterEmail = document.getElementById('newsletterEmail');
+    const newsletterMsg = document.getElementById('newsletterMsg');
+
+    newsletterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = newsletterEmail.value.trim();
+
+      if (!email) {
+        newsletterMsg.textContent = 'Please enter your email.';
+        newsletterMsg.style.color = '#f87171'; // Tailwind red-400
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        newsletterMsg.textContent = 'Please enter a valid email address.';
+        newsletterMsg.style.color = '#f87171';
+        return;
+      }
+
+      newsletterMsg.textContent = 'Thank you for subscribing!';
+      newsletterMsg.style.color = '#bbf7d0'; // Tailwind green-300
+      newsletterEmail.value = '';
+    });
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', String(!expanded));
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+
+</body>
+</html>

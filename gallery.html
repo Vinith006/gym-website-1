@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery | Beast Mode Gym</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Roboto:ital,wght@0,400;0,700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #1a202c, #111827);
+      color: #e5e7eb;
+    }
+    h1, h2, h3 {
+      font-family: 'Poppins', sans-serif;
+    }
+    nav.bg-blur {
+      background-color: rgba(0,0,0,0.6);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      user-select: none;
+    }
+    nav .logo {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 1.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 4px rgba(251, 191, 36, 0.8),
+                   0 0 10px rgba(251, 191, 36, 0.6);
+      user-select: none;
+      transition: color 0.3s;
+    }
+    nav .logo:hover { color: #f97316; cursor: pointer; }
+    nav ul li a {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      transition: color 0.3s, text-shadow 0.3s;
+      user-select: none;
+    }
+    nav ul li a:hover,
+    nav ul li a:focus {
+      color: #f97316;
+      text-shadow: 1px 1px 2px rgba(249, 115, 22, 0.8);
+      outline: none;
+    }
+    .btn-primary {
+      background: linear-gradient(to right, #fbbf24, #f97316);
+      color: black;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      box-shadow: 0 6px 15px rgba(249, 115, 22, 0.4);
+      transition: all 0.3s;
+      display: inline-block;
+      user-select: none;
+      text-align: center;
+    }
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background: linear-gradient(to right, #f97316, #fbbf24);
+      color: #111827;
+      box-shadow: 0 10px 25px rgba(249, 115, 22, 0.7);
+      transform: scale(1.05);
+      outline: none;
+    }
+
+    /* Gallery grid & image */
+    .gallery-item {
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      position: relative;
+      background: #191e26;
+    }
+    .gallery-item:hover { transform: scale(1.05); box-shadow: 0 15px 30px rgba(251, 191, 36, 0.8); z-index: 10; }
+    .gallery-item img {
+      width: 100%; height: 16rem; object-fit: cover; transition: transform 0.3s;
+      border-radius: 1rem; display: block; background: #181818;
+    }
+    .gallery-item:hover img { transform: scale(1.1);}
+    .gallery-caption {
+      position: absolute; inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fbbf24;
+      opacity: 0;
+      display: flex; justify-content: center; align-items: center;
+      font-weight: 600; font-size: 1.25rem;
+      border-radius: 1rem;
+      transition: opacity 0.3s;
+    }
+    .gallery-item:hover .gallery-caption {opacity: 1;}
+
+    /* LIGHTBOX MODAL */
+    #lightboxOverlay {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(15,18,20,0.92);
+      animation: none;
+      transition: background 0.25s;
+    }
+    #lightboxOverlay.show {
+      display: flex;
+      animation: fadeInModal 0.31s;
+    }
+    @keyframes fadeInModal {from { opacity: 0;} to { opacity: 1;}}
+    #lightboxModalBox {
+      position: relative;
+      background: #1a202c;
+      border-radius: 1.5rem;
+      max-width: 95vw; max-height: 85vh;
+      box-shadow: 0 8px 70px 10px rgba(251, 191, 36, 0.12);
+      display: flex; flex-direction: column; align-items: center;
+      animation: modalPopIn 0.44s cubic-bezier(.5,1.5,.35,.99);
+    }
+    @keyframes modalPopIn {from { transform: scale(0.92);} to { transform: scale(1);}}
+    #lightboxImage {
+      max-width: 88vw; max-height: 60vh; object-fit: contain;
+      border-radius: 1rem; background: #181818;
+      box-shadow: 0 4px 34px #0006;
+      transition: box-shadow 0.18s;
+      margin: 1.2rem 1rem 0.5rem 1rem; outline: none; display: block;
+    }
+    #lightboxCaption {
+      color: #fde047; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.18rem;
+      padding: 0.4rem 2rem 1.4rem 2rem; text-align: center; text-shadow: 1px 2px 7px #000c;
+    }
+    .lightbox-arrow, #lightboxClose {
+      position: absolute; background: rgba(30, 22, 5, 0.16); color: #FFD700; border-radius: 100%;
+      font-size: 3.1rem; line-height: 1; cursor: pointer;
+      transition: background 0.15s, color 0.22s, box-shadow 0.2s;
+      border: none; box-shadow: 0 2px 12px #000a; user-select: none;
+    }
+    .lightbox-arrow:hover, #lightboxClose:hover, .lightbox-arrow:focus, #lightboxClose:focus {
+      background: #FFD700; color: #22292f; outline: none;
+    }
+    #lightboxClose {
+      top: 1.15rem; right: 1.2rem; font-size: 2.5rem; z-index: 44;
+      padding: 0.3em 0.6em 0.35em 0.6em; background: rgba(0,0,0,0.18);
+    }
+    #lightboxPrev { left: -2.1rem; top: 50%; transform: translateY(-50%); padding: 0.32em 0.42em; }
+    #lightboxNext { right: -2.1rem; top: 50%; transform: translateY(-50%); padding: 0.32em 0.42em; }
+    @media (max-width: 810px) {
+      #lightboxPrev, #lightboxNext {
+        left: 0.4rem !important; right: 0.4rem !important; top: auto; bottom: 1rem;
+        transform: none; font-size: 2.1rem; box-shadow: 0 2px 6px #0008; background: #FFD70016;
+      }
+      #lightboxPrev { left: 0.7rem !important; bottom: 1.2rem;}
+      #lightboxNext { right: 0.7rem !important; bottom: 1.2rem;}
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR (same as membership page) -->
+  <nav class="bg-blur fixed w-full z-50 shadow">
+    <div class="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
+      <a href="index.html" class="logo flex items-center gap-2 select-none">
+        🏋️ <span class="hidden sm:inline">Beast Mode Gym</span>
+      </a>
+      <button id="menuBtn" class="md:hidden text-yellow-400 text-4xl focus:outline-none" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+      <ul id="navbarMenu" class="hidden md:flex gap-10 items-center font-semibold text-white select-none">
+        <li><a href="index.html" class="transition hover:text-yellow-400 focus:text-yellow-400">Home</a></li>
+        <li><a href="about.html" class="transition hover:text-yellow-400 focus:text-yellow-400">About</a></li>
+        <li><a href="programs.html" class="transition hover:text-yellow-400 focus:text-yellow-400">Programs</a></li>
+        <li><a href="gallery.html" class="transition hover:text-yellow-400 focus:text-yellow-400">Gallery</a></li>
+        <li><a href="membership.html" class="transition hover:text-yellow-400 focus:text-yellow-400">Membership</a></li>
+        <li><a href="contact.html" class="transition hover:text-yellow-400 focus:text-yellow-400">Contact</a></li>
+        <li><a href="membership.html" class="btn-primary focus:ring-4 focus:ring-yellow-400 focus:outline-none">Join Now</a></li>
+      </ul>
+    </div>
+    <ul id="mobileMenu" class="bg-blur fixed top-16 right-0 w-64 shadow-lg rounded-l-lg px-8 py-6 space-y-6 text-white text-lg font-semibold select-none hidden z-50">
+      <li><a href="index.html" class="block hover:text-yellow-400 focus:text-yellow-400">Home</a></li>
+      <li><a href="about.html" class="block hover:text-yellow-400 focus:text-yellow-400">About</a></li>
+      <li><a href="programs.html" class="block hover:text-yellow-400 focus:text-yellow-400">Programs</a></li>
+      <li><a href="gallery.html" class="block hover:text-yellow-400 focus:text-yellow-400">Gallery</a></li>
+      <li><a href="membership.html" class="block hover:text-yellow-400 focus:text-yellow-400">Membership</a></li>
+      <li><a href="contact.html" class="block hover:text-yellow-400 focus:text-yellow-400">Contact</a></li>
+      <li><a href="membership.html" class="btn-primary block px-6 py-3 rounded-full text-center focus:ring-4 focus:ring-yellow-400 focus:outline-none">Join Now</a></li>
+    </ul>
+  </nav>
+  <div class="h-[80px]"></div>
+  <!-- GALLERY SECTION -->
+  <section class="max-w-6xl mx-auto my-16 px-4 animate-fadeInUp">
+    <h1 class="text-4xl md:text-5xl text-yellow-400 font-bold text-center mb-4 select-none">Photo Gallery</h1>
+    <p class="text-lg text-center text-gray-400 mb-12 max-w-3xl mx-auto select-none">
+      Take a look inside Beast Mode Gym — real members, real energy, real results!
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <div class="gallery-item" tabindex="0" data-caption="Cardio Zone">
+        <img src="./images/c1.jpeg" alt="Cardio Zone" />
+        <div class="gallery-caption">Cardio Zone</div>
+      </div>
+      <div class="gallery-item" tabindex="0" data-caption="Strength Area">
+        <img src="./images/s.jpg" alt="Strength Area" />
+        <div class="gallery-caption">Strength Area</div>
+      </div>
+      <div class="gallery-item" tabindex="0" data-caption="Group Classes">
+        <img src="./images/g.jpg" alt="Group Classes" />
+        <div class="gallery-caption">Group Classes</div>
+      </div>
+      <div class="gallery-item" tabindex="0" data-caption="Personal Training">
+        <img src="./images/p.jpg" alt="Personal Training" />
+        <div class="gallery-caption">Personal Training</div>
+      </div>
+      <div class="gallery-item" tabindex="0" data-caption="Reception">
+        <img src="./images/r.jpg" alt="Reception" />
+        <div class="gallery-caption">Reception</div>
+      </div>
+      <div class="gallery-item" tabindex="0" data-caption="Member Success">
+        <img src="./images/ms.jpg" alt="Member Success" />
+        <div class="gallery-caption">Member Success</div>
+      </div>
+    </div>
+    <div class="text-center mt-14">
+      <a href="contact.html" class="btn-primary px-10 py-4 font-bold rounded-full shadow-lg hover:bg-yellow-500 transition transform hover:scale-105 select-none">
+        Book a Free Tour
+      </a>
+    </div>
+  </section>
+  <!-- LIGHTBOX MODAL -->
+  <div id="lightboxOverlay" tabindex="-1" aria-modal="true" role="dialog" aria-label="Image viewer">
+    <div id="lightboxModalBox">
+      <span id="lightboxClose" role="button" aria-label="Close image viewer" tabindex="0">&times;</span>
+      <span id="lightboxPrev" class="lightbox-arrow" role="button" aria-label="Previous image" tabindex="0">&#10094;</span>
+      <img id="lightboxImage" src="" alt="" tabindex="0"/>
+      <span id="lightboxNext" class="lightbox-arrow" role="button" aria-label="Next image" tabindex="0">&#10095;</span>
+      <div id="lightboxCaption"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER (full, with newsletter) -->
+  <footer class="bg-black text-yellow-400 py-12 px-6 md:px-20 select-none">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+      <div class="space-y-4">
+        <a href="index.html" class="inline-flex items-center gap-2 font-bold text-yellow-400 text-2xl select-none">
+          🏋️ Beast Mode Gym
+        </a>
+        <p class="text-gray-400 max-w-xs">
+          Empowering you since 2012 to achieve your fitness goals with expert coaching and top-tier facilities.
+        </p>
+      </div>
+      <div>
+        <h3 class="font-bold text-yellow-400 text-xl mb-4">Quick Links</h3>
+        <ul class="space-y-2 text-gray-300">
+          <li><a href="index.html" class="hover:text-yellow-400 transition">Home</a></li>
+          <li><a href="about.html" class="hover:text-yellow-400 transition">About Us</a></li>
+          <li><a href="programs.html" class="hover:text-yellow-400 transition">Programs</a></li>
+          <li><a href="membership.html" class="hover:text-yellow-400 transition">Membership</a></li>
+          <li><a href="gallery.html" class="hover:text-yellow-400 transition">Gallery</a></li>
+          <li><a href="contact.html" class="hover:text-yellow-400 transition">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-yellow-400 text-xl mb-4">Contact Us</h3>
+        <p class="text-gray-300 mb-2">
+          📞 <a href="tel:+919487293657" class="hover:text-yellow-400 transition">+91 94872 93657</a><br />
+          ✉️ <a href="mailto:vinithkmr006@gmail.com" class="hover:text-yellow-400 transition">vinithkmr006@gmail.com</a>
+        </p>
+        <p class="text-gray-400 text-sm max-w-xs">
+          Visit us for a free tour or personal consultation. Our friendly team is here to help!
+        </p>
+        <div class="flex items-center justify-center md:justify-start space-x-4 mt-6">
+          <!-- Social Icons -->
+          <a href="#" aria-label="Facebook" class="text-yellow-400 hover:text-yellow-300 transition text-2xl" target="_blank" rel="noopener noreferrer" tabindex="0">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M22 12a10 10 0 10-11.58 9.85v-6.97h-2.53v-2.88h2.53v-2.2c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.24 0-1.63.77-1.63 1.56v1.86h2.77l-.44 2.88h-2.33v6.97A10.04 10.04 0 0022 12z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Instagram" class="text-yellow-400 hover:text-yellow-300 transition text-2xl" target="_blank" rel="noopener noreferrer" tabindex="0">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm8.933 2.5a1.193 1.193 0 110 2.386 1.193 1.193 0 010-2.386zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Twitter" class="text-yellow-400 hover:text-yellow-300 transition text-2xl" target="_blank" rel="noopener noreferrer" tabindex="0">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M22.46 6c-.77.35-1.59.58-2.46.69a4.3 4.3 0 001.88-2.37 8.69 8.69 0 01-2.75 1.05 4.28 4.28 0 00-7.29 3.9 12.16 12.16 0 01-8.83-4.48 4.28 4.28 0 001.32 5.7 4.22 4.22 0 01-1.94-.54v.05a4.28 4.28 0 003.44 4.19 4.3 4.3 0 01-1.93.07 4.28 4.28 0 004 3 8.6 8.6 0 01-5.3 1.83c-.34 0-.67-.02-1-.07a12.17 12.17 0 006.58 1.93c7.9 0 12.22-6.54 12.22-12.22 0-.19-.01-.37-.02-.56A8.67 8.67 0 0022.46 6z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-bold text-yellow-400 text-xl mb-4">Newsletter</h3>
+        <p class="text-gray-400 mb-4 max-w-xs mx-auto md:mx-0">
+          Get updates on new programs and discounts. Subscribe to our newsletter!
+        </p>
+        <form id="newsletterForm" class="flex max-w-xs mx-auto md:mx-0" novalidate>
+          <input type="email" id="newsletterEmail" placeholder="Your email" required
+            class="w-full rounded-l-xl p-3 border border-yellow-400 bg-black text-yellow-400 placeholder-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+          <button type="submit" class="bg-yellow-400 rounded-r-xl px-6 font-bold text-black transition hover:bg-yellow-500 focus:outline-none">
+            Subscribe
+          </button>
+        </form>
+        <p id="newsletterMsg" class="mt-3 text-sm font-semibold"></p>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-12 border-t border-yellow-600 pt-6 text-center text-yellow-500 select-none text-sm">
+      &copy; 2025 Beast Mode Gym. All rights reserved. Crafted with ❤️ by Vinith Kumar
+    </div>
+  </footer>
+  <!-- SCRIPTS -->
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if(menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+        menuBtn.setAttribute('aria-expanded', String(!expanded));
+      });
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          menuBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
+    // Newsletter form interactivity
+    const newsletterForm = document.getElementById('newsletterForm');
+    const newsletterEmail = document.getElementById('newsletterEmail');
+    const newsletterMsg = document.getElementById('newsletterMsg');
+    if(newsletterForm){
+      newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = newsletterEmail.value.trim();
+        if (!email) {
+          newsletterMsg.textContent = 'Please enter your email.';
+          newsletterMsg.style.color = '#f87171';
+          return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          newsletterMsg.textContent = 'Please enter a valid email address.';
+          newsletterMsg.style.color = '#f87171';
+          return;
+        }
+        newsletterMsg.textContent = 'Thank you for subscribing!';
+        newsletterMsg.style.color = '#bbf7d0';
+        newsletterEmail.value = '';
+      });
+    }
+
+    // Gallery Lightbox logic
+    const lightboxOverlay = document.getElementById('lightboxOverlay');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    const galleryItems = Array.from(document.querySelectorAll('.gallery-item img'));
+    const galleryFrames = Array.from(document.querySelectorAll('.gallery-item'));
+    let currentIndex = 0;
+    let captions = galleryFrames.map(item => item.dataset.caption || item.querySelector('.gallery-caption')?.textContent || '');
+
+    function openLightbox(index) {
+      currentIndex = index;
+      lightboxImage.src = galleryItems[currentIndex].src;
+      lightboxImage.alt = galleryItems[currentIndex].alt || "Gallery Image";
+      lightboxCaption.textContent = captions[currentIndex];
+      lightboxOverlay.classList.add('show');
+      setTimeout(() => lightboxImage.focus(), 120);
+      document.body.style.overflow = 'hidden'; // prevent background scroll
+    }
+    function closeLightbox() {
+      lightboxOverlay.classList.remove('show');
+      setTimeout(() => { lightboxOverlay.style.display = "none"; }, 250);
+      document.body.style.overflow = '';
+    }
+    function showPrev() { currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length; openLightbox(currentIndex); }
+    function showNext() { currentIndex = (currentIndex + 1) % galleryItems.length; openLightbox(currentIndex);}
+    galleryFrames.forEach((item, index) => {
+      item.addEventListener('click', () => openLightbox(index));
+      item.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openLightbox(index);
+        }
+      });
+    });
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxClose.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') closeLightbox(); });
+    lightboxPrev.addEventListener('click', showPrev);
+    lightboxPrev.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') showPrev(); });
+    lightboxNext.addEventListener('click', showNext);
+    lightboxNext.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') showNext(); });
+    document.addEventListener('keydown', e => {
+      if (lightboxOverlay.classList.contains('show')) {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') showPrev();
+        if (e.key === 'ArrowRight') showNext();
+      }
+    });
+    lightboxOverlay.addEventListener('keydown', function(e) {
+      if (!lightboxOverlay.classList.contains('show')) return;
+      const focusables = [lightboxClose, lightboxPrev, lightboxImage, lightboxNext];
+      let idx = focusables.indexOf(document.activeElement);
+      if(e.key === 'Tab') {
+        e.preventDefault();
+        if(e.shiftKey) {
+          idx = idx - 1 < 0 ? focusables.length - 1 : idx - 1;
+        } else {
+          idx = (idx + 1) % focusables.length;
+        }
+        focusables[idx].focus();
+      }
+    });
+    lightboxOverlay.addEventListener('click', e => { if (e.target === lightboxOverlay) closeLightbox(); });
+  </script>
+</body>
+</html>
